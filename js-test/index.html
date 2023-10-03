@@ -9,6 +9,9 @@
 	<h2>Custom Button:</h2>
 	<input id="CustomButtonInput" type="text" style="background:seagreen">
 	<button onclick="alert(document.getElementById('CustomButtonInput').value)" style="background:seagreen">Alert!</button>
+    <h2>Please enter your phone number (joke):</h2>
+    <input type="range" max="999999999" value="0" onchange="document.getElementById('PhoneNumber').innerHTML=this.value">
+    <a id="PhoneNumber">0</a>
 	<h2>List of strings:</h2>
     <input id="StringInput" type="text" style="background:seagreen;margin-bottom:5px">
     <button style="background:seagreen" onclick="const clone = document.getElementById('StringTemplate').cloneNode(true); clone.removeAttribute('id'); clone.style.display='block'; clone.firstChild.nodeValue=document.getElementById('StringInput').value; document.getElementById('StringList').appendChild(clone);">Add</button>
