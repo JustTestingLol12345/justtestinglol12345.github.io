@@ -17,7 +17,7 @@
     <button style="background:seagreen" onclick="const clone = document.getElementById('StringTemplate').cloneNode(true); clone.removeAttribute('id'); clone.style.display='block'; clone.firstChild.nodeValue=document.getElementById('StringInput').value; document.getElementById('StringList').appendChild(clone);">Add</button>
     <input id="ConfirmStringDeletion" type="checkbox" checked="true">Confirm String Deletion</input>
     <div style="background:palegreen;padding:5px" id="StringList">
-    	<p style="background:mediumseagreen;padding:5px;display:none" id="StringTemplate">
+    	<p style="background:mediumseagreen;padding:5px;display:none;margin:0px" id="StringTemplate">
         String
         <button style="padding:0px;margin-left:10px;background:seagreen" onclick="if (document.getElementById('ConfirmStringDeletion').checked) {if (confirm('Are you sure you want to delete this string?')) {this.parentElement.remove();}} else {this.parentElement.remove();}">Delete</button>
         <button style="padding:0px;margin-left:5px;background:seagreen" onclick="const New = prompt('Edit this string:',this.parentElement.firstChild.nodeValue); if (New!=null && New!='') {this.parentElement.firstChild.nodeValue=New}">Edit</button>
