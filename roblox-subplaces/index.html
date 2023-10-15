@@ -1,0 +1,53 @@
+<head>
+	<title>Roblox Sub-places finder</title>
+  <link rel="icon" href="https://justtestinglol12345.github.io/assets/Mate.png">
+</head>
+<body>
+  <input type="number" placeholder="Enter PlaceId of Universe" id="placeId">
+  <select id="createdPlacesSortOrder">
+    <optgroup label="Created places sort order">
+		<option value="Asc">Ascending</option>
+		<option value="Desc">Descending</option>
+	</optgroup>
+  </select>
+  <button onclick="getPlaces()">Get Places</button>
+  <button onclick="getCreatedPlaces()">Get Created Places</button>
+  <h1>Sub-places:</h1>
+  <h2 id="placeIds">Sub-places will show up here</h2>
+  <h1>Created places:</h1>
+  <h2 id="createdPlaceIds">Created places will show up here</h2>
+  <button onclick="getCreatedPlaces(createdPlacesCursor)">Load more</button>
+  <script>
+    let createdPlacesCursor = ""
+    async function getPlaces() {
+      const placeId = document.getElementById("placeId").value;
+      document.getElementById("placeIds").innerHTML = "| ";
+      const response1 = await fetch("https://apis.roproxy.com/universes/v1/places/"+placeId+"/universe");
+      const response1json = await response1.json();
+      const universeId = response1json.universeId;
+      const response2 = await fetch("https://develop.roproxy.com/v1/universes/"+universeId+"/places?limit=100");
+      const response2json = await response2.json();
+      response2json.data.forEach(eachPlace);
+    }
+	async function getCreatedPlaces(cursor) {
+	  const placeId = document.getElementById("placeId").value;
+	  if (cursor == null) {
+	    createdPlacesCursor = "";
+	    document.getElementById("createdPlaceIds").innerHTML = "| ";
+	  }
+	  const response1 = await fetch("https://apis.roproxy.com/universes/v1/places/"+placeId+"/universe");
+      const response1json = await response1.json();
+      const universeId = response1json.universeId;
+	  const response2 = await fetch("https://develop.roproxy.com/v1/universes/"+universeId+"/places?limit=100&isUniverseCreation=true&sortOrder="+document.getElementById("createdPlacesSortOrder").value+"&cursor="+createdPlacesCursor);
+      const response2json = await response2.json();
+	  createdPlacesCursor = response2json.nextPageCursor;
+	  response2json.data.forEach(eachCreatedPlace);
+	}
+    function eachPlace(item) {
+      document.getElementById("placeIds").innerHTML += item.id + ":" + item.name + " | "
+    }
+	function eachCreatedPlace(item) {
+      document.getElementById("createdPlaceIds").innerHTML += item.id + ":" + item.name + " | "
+    }
+  </script>
+</body>
